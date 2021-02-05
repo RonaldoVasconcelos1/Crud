@@ -28,16 +28,24 @@ module.exports = class UserRepository {
   }
 
   static async put (idUser, user) {
-    const response = await knex('users')
-      .update(user)
-      .where({ id: idUser })
-    return response
+    try {
+      const response = await knex('users')
+        .update(user)
+        .where({ id: idUser })
+      return response
+    } catch (error) {
+      return error
+    }
   }
 
   static async delete (id) {
-    const response = await knex('users')
-      .where({ id: id })
-      .del()
-    return response
+    try {
+      const response = await knex('users')
+        .where({ id: id })
+        .del()
+      return response
+    } catch (error) {
+      return error
+    }
   }
 }
