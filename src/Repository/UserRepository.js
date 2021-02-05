@@ -9,14 +9,24 @@ module.exports = class UserRepository {
   static async create (user) {
     try {
       const response = await knex('users').insert(user)
-      console.log(response)
       return response
     } catch (error) {
       return error
     }
   }
 
-  static async findByEmail (userId) {
+  static async findByEmail (email) {
+    try {
+      const user = await knex('users')
+        .where({ email: email })
+        .first()
+      return user
+    } catch (error) {
+      return error
+    }
+  }
+
+  static async findById (userId) {
     try {
       const user = await knex('users')
         .where({ id: userId })
