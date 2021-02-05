@@ -1,9 +1,14 @@
+const { encryptPassword } = require('../utils/bcript')
 const userRepo = require('../Repository/UserRepository')
 
 module.exports = {
   get: async (req, res) => {
-    const users = await userRepo.get()
-    return res.json(users)
+    try {
+      const users = await userRepo.get()
+      return res.json(users)
+    } catch (error) {
+      return error
+    }
   },
   insert: async (req, res) => {
     try {
@@ -17,6 +22,7 @@ module.exports = {
       if (!user.password) {
         return res.status(400)
       }
+      user.password = encryptPassword(user.password)
       const response = await userRepo.create(user)
       if (response.detail) {
         return res.status(406).end('Registered User')
@@ -31,6 +37,16 @@ module.exports = {
       return res.send(400).end()
     }
     const response = await userRepo.findByEmail(req.params.id)
+    if (!response) {
+      return res.status(404).end('User Notfound')
+    }
+    return res.json(response)
+  },
+  findByEmail: async (req, res) => {
+    if (!req.params.email) {
+      return res.send(400).end()
+    }
+    const response = await userRepo.findByEmail(req.params.email)
     if (!response) {
       return res.status(404).end('User Notfound')
     }
