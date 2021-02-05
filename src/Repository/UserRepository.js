@@ -12,7 +12,6 @@ module.exports = class UserRepository {
       console.log(response)
       return response
     } catch (error) {
-      console.log(error)
       return error
     }
   }
