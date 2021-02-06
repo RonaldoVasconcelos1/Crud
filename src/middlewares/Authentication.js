@@ -17,10 +17,12 @@ module.exports = class Authentication {
       }
       const isMatch = bcrypt.compareSync(password, user.password)
       if (isMatch) {
-        const token = jwt.sign({
+        const payload = {
+          id: user.id,
           name: user.name,
           email: user.email
-        }, authSecret, { expiresIn: 86400 })
+        }
+        const token = jwt.sign(payload, authSecret, { expiresIn: 86400 })
         res.set('X-TOKEN', token)
         return res.status(204).end()
       }
