@@ -1,15 +1,16 @@
+require('dotenv').config()
 module.exports = {
-  client: 'postgresql',
+  client: process.env.DB_CLIENT,
   connection: {
-    database: 'users',
-    user: 'postgres',
-    password: '123456'
+    database: process.env.DB_DATABASE,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS
   },
   pool: {
     min: 2,
     max: 10
   },
   migrations: {
-    tableName: 'knex_migrations'
+    tableName: process.env.DB_MIGRATE
   }
 }
