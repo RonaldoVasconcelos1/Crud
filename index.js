@@ -1,5 +1,6 @@
 const app = require('./src/app')
+require('dotenv').config()
 
-app.listen(8000, () => {
-  console.log('listening on port 8080')
+app.listen(process.env.APP_PORT || 8000, () => {
+  console.log(`back end listening port: ${process.env.APP_PORT}`)
 })
