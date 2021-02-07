@@ -36,7 +36,7 @@ module.exports = {
     if (!req.params.id) {
       return res.send(400).end()
     }
-    const response = await userRepo.findByEmail(req.params.id)
+    const response = await userRepo.findById(req.params.id)
     if (!response) {
       return res.status(404).end('User Notfound')
     }
